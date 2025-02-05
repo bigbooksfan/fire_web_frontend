@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block menu %}
+            <td><a href="main">Main</a></td>
+            <td><a href="journal">Journal</a></td>
+            <td><a href="zones" style="background:yellow">Zones</a></td>
+            <td><a href="trains">Trains</a></td>
+            <td><a href="statuses">Statuses</a></td>
+{% endblock %}
+{% block middle %}
+<!-- zones -->
+<table>
+    <tr style="height:500px">
+   		<td style="width:300px">
+			<p style="border:None">Signaling</p>
+			<table>
+				<tr style="height:80px"><td style="width:290px">Zone 1</td></tr>
+				<tr style="height:80px"><td>Zone 2</td></tr>
+				<!-- <tr style="height:80px"><td id="flashingCell">Blinking cell</td></tr> -->
+			</table>
+   		</td>
+   		<td style="width:300px">
+			<p style="border:None">Notification</p>
+			<table>
+				<tr style="height:80px"><td style="width:290px">Zone 1</td></tr>
+				<tr style="height:80px"><td>Zone 2</td></tr>
+				<tr style="height:80px"><td>Zone 3</td></tr>
+			</table>
+   		</td>
+   		<td style="width:300px">
+			<p style="border:None">Firefighting</p>
+			<table>
+				<tr style="height:80px"><td style="width:290px">Zone 1</td></tr>
+				<tr style="height:80px"><td>Zone 2</td></tr>
+				<tr style="height:80px"><td>Zone 3</td></tr>
+			</table>
+   		</td>
+   		<td style="width:300px">
+			<p style="border:None">Smoke removal</p>
+			<table>
+				<tr style="height:80px"><td style="width:290px">Zone 1</td></tr>
+				<tr style="height:80px"><td>Zone 2</td></tr>
+				<tr style="height:80px"><td>Zone 3</td></tr>
+			</table>
+   		</td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td style="border:None;width:700px">
+			{{ content }}
+		</td>
+		<td style="width:300px;height:70px">
+			Reset
+		</td>
+	</tr>
+</table>
+{%endblock %}

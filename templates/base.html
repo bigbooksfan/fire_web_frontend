@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<script>
+			function startTime() {
+				var today = new Date();
+				var h = today.getHours();
+				var m = today.getMinutes();
+				var s = today.getSeconds();
+				document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+				setTimeout(startTime, 1000);
+			}
+		</script>
+		<style>
+			.table { 
+				display: table;
+				width: 100%;
+			}
+			.row {
+				display: table-row;
+				max-width: 100%;
+			}
+			th, td { 
+				border: 1px solid black; 
+				text-align: center;
+			}
+			a,p {
+				width: 180px;
+				height: 50px;
+				display: table-cell;
+				border: 1px solid;
+				text-align: center;
+				vertical-align: middle;
+			}
+		</style>
+    </head>
+    <body onload="startTime()">
+		<table>
+			<!-- menu -->
+			<tr>
+				<td><p>Logo</p></td>	
+				{% block menu %}{% endblock %}
+				<td><p id="time"></p></td>
+			</tr>        
+			<tr style="height:600px">
+				<td colspan="7">
+					{% block middle %} {% endblock %}
+				</td>
+			</tr>
+		</table>
+	<script>
+		var flag = true;
+		function changeColor () {
+			if(flag==true) {
+				document.getElementById("flashingCell").style.background="Yellow";
+				flag=false;
+			}
+			else if (flag==false) {
+				document.getElementById("flashingCell").style.background="Red";
+				flag = true;
+			}
+		}
+		setInterval("changeColor()", 500);
+	</script>
+    </body>
+</html>
