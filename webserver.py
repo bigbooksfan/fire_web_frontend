@@ -27,7 +27,6 @@ print('Okei')
 for i in range(120):
 	time.sleep(2)
 	s = "okei!"
-	render_template("zones.html", content=s)
 	print(i)
 
 #if __name__ == "__main__":

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block menu %}
+<td><a href="main">Main</a></td>
+<td><a href="journal">Journal</a></td>
+<td><a href="zones">Zones</a></td>
+<td><a href="trains" style="background:yellow">Trains</a></td>
+<td><a href="statuses">Statuses</a></td>
+{% endblock %}
+{% block middle %}
+<!-- main window -->
+<table style="padding:10px">
+	<tr style="height:550px">
+		<td style="width:1228px;vertical-align:top">
+			<table>
+				{% autoescape off %}
+				{{ trains_table }}
+				{% endautoescape %}
+			</table>
+		</td>
+	</tr>
+</table>
+{%endblock %}

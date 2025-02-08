@@ -10,36 +10,37 @@
 <!-- zones -->
 <table>
     <tr style="height:500px">
-   		<td style="width:300px">
+   		<td style="width:320px;vertical-align:top">
 			<p style="border:None">Signaling</p>
 			<table>
-				<tr style="height:80px"><td style="width:290px">Zone 1</td></tr>
-				<tr style="height:80px"><td>Zone 2</td></tr>
+				{% autoescape off %}
+				{{ signaling_table }}
+				{% endautoescape %}
 				<!-- <tr style="height:80px"><td id="flashingCell">Blinking cell</td></tr> -->
 			</table>
    		</td>
-   		<td style="width:300px">
+   		<td style="width:320px;vertical-align:top">
 			<p style="border:None">Notification</p>
 			<table>
-				<tr style="height:80px"><td style="width:290px">Zone 1</td></tr>
-				<tr style="height:80px"><td>Zone 2</td></tr>
-				<tr style="height:80px"><td>Zone 3</td></tr>
+				{% autoescape off %}
+				{{ notification_table }}
+				{% endautoescape %}
 			</table>
    		</td>
-   		<td style="width:300px">
+   		<td style="width:320px;vertical-align:top">
 			<p style="border:None">Firefighting</p>
 			<table>
-				<tr style="height:80px"><td style="width:290px">Zone 1</td></tr>
-				<tr style="height:80px"><td>Zone 2</td></tr>
-				<tr style="height:80px"><td>Zone 3</td></tr>
+				{% autoescape off %}
+				{{ firefighting_table }}
+				{% endautoescape %}
 			</table>
    		</td>
-   		<td style="width:300px">
+   		<td style="width:320px;vertical-align:top">
 			<p style="border:None">Smoke removal</p>
 			<table>
-				<tr style="height:80px"><td style="width:290px">Zone 1</td></tr>
-				<tr style="height:80px"><td>Zone 2</td></tr>
-				<tr style="height:80px"><td>Zone 3</td></tr>
+				{% autoescape off %}
+				{{ smoke_removal_table }}
+				{% endautoescape %}
 			</table>
    		</td>
 	</tr>

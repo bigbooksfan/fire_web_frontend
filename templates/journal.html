@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block menu %}
+<td><a href="main">Main</a></td>
+<td><a href="journal" style="background:yellow">Journal</a></td>
+<td><a href="zones">Zones</a></td>
+<td><a href="trains">Trains</a></td>
+<td><a href="statuses">Statuses</a></td>
+{% endblock %}
+{% block middle %}
+<!-- main window -->
+<table style="padding:10px">
+	<tr style="height:450px">
+		<td style="width:1228px">
+			journal
+		</td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td style="border:None;width:700px">
+		</td>
+		<td style="width:300px;height:70px">
+			Reset
+		</td>
+	</tr>
+</table>
+{%endblock %}

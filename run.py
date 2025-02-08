@@ -4,23 +4,16 @@ import xml.etree.ElementTree as ET
 import time
 import webbrowser
 import pyautogui
-#from pynput import mouse
 import os
 import xmltodict
+from flask import Flask, render_template, redirect
+from multiprocessing import Process
 
-# 154 - 305  -- main
-# 490 - 660  -- zones
-def on_click(x, y, button, pressed):
-	if pressed:
-		print('{0} at {1}'.format(
-			'Pressed' if pressed else 'Released',
-			(x, y)))
-		if x > 490 and x < 660 and y < 80:
-			show_zones()
-		elif (x < 490 or x > 660) and y < 80:
-			show_main()
-	if not pressed:
-		return True
+def add_table_zone(name):
+	return "<tr style=\"height:80px\"><td style=\"width:310px\">{}</td></tr>".format(name)
+	
+def add_train(board_id, loop_id):
+	return "<tr style=\"height:80px\"><td style=\"width:310px\">board {} / loop {}</td></tr>".format(board_id, loop_id)
 
 def show_zones():
 	print('enter zones renderer')
@@ -149,20 +142,91 @@ print(json_data)
 value_to_check = json_data['resp']['params'][0]['i']
 print("value to check: " + str(value_to_check))
 '''
-'''
-#create basic file
-with open("index.html", "w") as page, open("html_templates/open.html", "r") as first, open("html_templates/close.html", "r") as last, open("html_templates/main.html", "r") as main:
-	buf = first.read()
-	page.write(buf)
-	buf = main.read()
-	page.write(buf)
-	buf = last.read()
-	page.write(buf)
 
-page.close()
-first.close()
-last.close()
-'''
+#collect zones
+signalization = []
+notification = []
+firefighting = []
+smoke_removal = []
+
+for zone in config_json['fire']['station']['zones'][0]['zone']:
+	signalization.append(zone)
+for zone in config_json['fire']['station']['zones'][1]['zone']:
+	notification.append(zone)
+for zone in config_json['fire']['station']['zones'][2]['zone']:
+	firefighting.append(zone)
+for zone in config_json['fire']['station']['zones'][3]['zone']:
+	smoke_removal.append(zone)
+	
+signaling_table=""
+for zone in signalization:
+	signaling_table += add_table_zone(zone['@name'])
+
+notification_table=""
+for zone in notification:
+	notification_table += add_table_zone(zone['@name'])
+
+firefighting_table=""
+for zone in firefighting:
+	firefighting_table += add_table_zone(zone['@name'])
+
+smoke_removal_table=""
+for zone in smoke_removal:
+	smoke_removal_table += add_table_zone(zone['@name'])
+
+#build trains	
+trains_table=""
+
+boards_json = config_json['fire']['station']['board']
+txt_data = json.dumps(boards_json, indent=4)
+print(txt_data)
+
+board_id = boards_json['@id']
+for port in boards_json['port']:
+	if port['@type'] == 'unused':
+		continue
+	#print(port)
+	loop_id = port['loop']['@id']
+	print('board {} / loop {}'.format(board_id, loop_id))
+	trains_table += add_train(board_id, loop_id)
+	#pass
+
+s = "not okei"
+#render webpages, start Flask
+app = Flask(__name__)
+
+@app.route('/main')
+@app.route('/')
+def home():
+	return render_template("main.html")
+
+@app.route('/zones')
+def zones():
+	return render_template("zones.html", content=s, 
+		signaling_table=signaling_table,
+		notification_table=notification_table,
+		firefighting_table=firefighting_table,
+		smoke_removal_table=smoke_removal_table)
+
+@app.route('/journal')
+def route():
+	return render_template("journal.html")
+
+@app.route('/trains')
+def trains():
+	return render_template("trains.html",
+		trains_table=trains_table)
+
+@app.route('/statuses')
+def statuses():
+	return render_template("statuses.html")
+	
+def run_app():
+	app.run()
+	
+process = Process(target=run_app)
+process.start()
+
 
 #browser = webbrowser.get()
 #cwd = os.path.dirname(os.path.abspath(__file__))
@@ -170,9 +234,6 @@ last.close()
 
 #time.sleep(15)
 #pyautogui.press('f11')
-
-#listener = mouse.Listener(on_click=on_click)
-#listener.start()
 
 print("Enter periodic")
 while True:
