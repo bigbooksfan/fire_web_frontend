@@ -11,7 +11,11 @@
 <table style="padding:10px">
 	<tr style="height:450px">
 		<td style="width:1228px">
-			journal
+			<table>
+				{% autoescape off %}
+				{{ journal_list }}
+				{% endautoescape %}
+			</table>
 		</td>
 	</tr>
 </table>

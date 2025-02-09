@@ -6,9 +6,25 @@ import webbrowser
 import pyautogui
 import os
 import xmltodict
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from multiprocessing import Process
 
+def add_journal_row():
+	ret = '''
+	<tr>
+		<td>
+			123
+		</td>
+		<td>
+			abc
+		</td>
+		<td>
+			ok ok
+		</td>
+	</tr>
+	'''
+	return ret
+	
 def add_table_zone(name):
 	return "<tr style=\"height:80px\"><td style=\"width:310px\">{}</td></tr>".format(name)
 	
@@ -191,6 +207,8 @@ for port in boards_json['port']:
 	trains_table += add_train(board_id, loop_id)
 	#pass
 
+journal_list = ""
+
 s = "not okei"
 #render webpages, start Flask
 app = Flask(__name__)
@@ -208,9 +226,27 @@ def zones():
 		firefighting_table=firefighting_table,
 		smoke_removal_table=smoke_removal_table)
 
-@app.route('/journal')
+tmp_page = '''<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>  
+	  qwerty
+	  <object data="data.txt"></object>
+  </body>
+</html>
+'''
+
+@app.route('/journal', methods=["GET", "POST"])
 def route():
-	return render_template("journal.html")
+	if request.method == "GET":		
+		#open file here
+		with open("front/dynamic_data/journal.txt", "r") as f:
+			journal_list = f.read()
+			f.close()
+		#journal_list = journal_list_tmp
+	return render_template("journal.html", journal_list=journal_list)
+	#return tmp_page
 
 @app.route('/trains')
 def trains():
@@ -235,10 +271,17 @@ process.start()
 #time.sleep(15)
 #pyautogui.press('f11')
 
+with open("front/dynamic_data/journal.txt", "w") as f:
+	w.truncate()
+
 print("Enter periodic")
 while True:
 	time.sleep(5)
 	print('tick')
+	
+	with open("front/dynamic_data/journal.txt", "a") as f:
+		f.write(add_journal_row())
+		f.close()
 	
 	#data = get_socket_answer('\"args\":null,\"cmd\":\"getreadparamfrompool\"')
 	#print(data)
