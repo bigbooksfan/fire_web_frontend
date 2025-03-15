@@ -127,11 +127,11 @@ root = tree.getroot()
 print_xml_tree(root)
 
 config_json = xmltodict.parse(config_json_data['resp']['cfgxml'])
-#print(config_json)
+print(config_json['fire']['station']['zone'][1]['@name'])
 #aaas = json.dumps(config_json, indent=4, ensure_ascii=False)
 #print(aaas)
-for n in range(4):
-	for p in config_json['fire']['station']['zones'][n]['zone']:
+for n in range(2):
+	for p in config_json['fire']['station']['zone'][n]['sens']:
 		print(p)
 #exit()
 
@@ -165,15 +165,16 @@ notification = []
 firefighting = []
 smoke_removal = []
 
-for zone in config_json['fire']['station']['zones'][0]['zone']:
+for zone in config_json['fire']['station']['zone']:
 	signalization.append(zone)
-for zone in config_json['fire']['station']['zones'][1]['zone']:
-	notification.append(zone)
-for zone in config_json['fire']['station']['zones'][2]['zone']:
-	firefighting.append(zone)
-for zone in config_json['fire']['station']['zones'][3]['zone']:
-	smoke_removal.append(zone)
+#for zone in config_json['fire']['station']['zone'][1]:
+#	notification.append(zone)
+#for zone in config_json['fire']['station']['zone'][2]['sens']:
+#	firefighting.append(zone)
+#for zone in config_json['fire']['station']['zone'][3]['sens']:
+#	smoke_removal.append(zone)
 	
+print(signalization)
 signaling_table=""
 for zone in signalization:
 	signaling_table += add_table_zone(zone['@name'])
@@ -183,12 +184,12 @@ for zone in notification:
 	notification_table += add_table_zone(zone['@name'])
 
 firefighting_table=""
-for zone in firefighting:
-	firefighting_table += add_table_zone(zone['@name'])
+#for zone in firefighting:
+#	firefighting_table += add_table_zone(zone['@name'])
 
 smoke_removal_table=""
-for zone in smoke_removal:
-	smoke_removal_table += add_table_zone(zone['@name'])
+#for zone in smoke_removal:
+#	smoke_removal_table += add_table_zone(zone['@name'])
 
 #build trains	
 trains_table=""
@@ -264,15 +265,15 @@ process = Process(target=run_app)
 process.start()
 
 
-#browser = webbrowser.get()
+browser = webbrowser.get()
 #cwd = os.path.dirname(os.path.abspath(__file__))
-#browser.open('localhost:5000')
+browser.open('localhost:5000')
 
-#time.sleep(15)
-#pyautogui.press('f11')
+time.sleep(15)
+pyautogui.press('f11')
 
 with open("front/dynamic_data/journal.txt", "w") as f:
-	w.truncate()
+	f.truncate()
 
 print("Enter periodic")
 while True:
