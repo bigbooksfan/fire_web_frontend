@@ -1,145 +1,73 @@
 
 	<tr>
 		<td>
-			123
+			Time
 		</td>
 		<td>
-			abc
+			Action name
 		</td>
 		<td>
-			ok ok
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			123
-		</td>
-		<td>
-			abc
-		</td>
-		<td>
-			ok ok
+			Status
 		</td>
 	</tr>
 	
 	<tr>
 		<td>
-			123
+			Time
 		</td>
 		<td>
-			abc
+			Action name
 		</td>
 		<td>
-			ok ok
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			123
-		</td>
-		<td>
-			abc
-		</td>
-		<td>
-			ok ok
+			Status
 		</td>
 	</tr>
 	
 	<tr>
 		<td>
-			123
+			Time
 		</td>
 		<td>
-			abc
+			Action name
 		</td>
 		<td>
-			ok ok
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			123
-		</td>
-		<td>
-			abc
-		</td>
-		<td>
-			ok ok
+			Status
 		</td>
 	</tr>
 	
 	<tr>
 		<td>
-			123
+			Time
 		</td>
 		<td>
-			abc
+			Action name
 		</td>
 		<td>
-			ok ok
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			123
-		</td>
-		<td>
-			abc
-		</td>
-		<td>
-			ok ok
+			Status
 		</td>
 	</tr>
 	
 	<tr>
 		<td>
-			123
+			Time
 		</td>
 		<td>
-			abc
+			Action name
 		</td>
 		<td>
-			ok ok
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			123
-		</td>
-		<td>
-			abc
-		</td>
-		<td>
-			ok ok
+			Status
 		</td>
 	</tr>
 	
 	<tr>
 		<td>
-			123
+			Time
 		</td>
 		<td>
-			abc
+			Action name
 		</td>
 		<td>
-			ok ok
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			123
-		</td>
-		<td>
-			abc
-		</td>
-		<td>
-			ok ok
+			Status
 		</td>
 	</tr>
 	
