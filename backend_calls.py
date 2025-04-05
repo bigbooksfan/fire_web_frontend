@@ -27,7 +27,12 @@ def get_socket_answer(query1):
 	let = len(query1) + 2
 	query = str(let) + ' {' + query1 + '}'
 	#print(query)
-	sock.send(query.encode('utf-8'))
+	try:
+		sock.send(query.encode('utf-8'))
+	except ConnectionRefusedError as e:
+		while backend_calls.connect_to_socket() is False:
+			log.error('No connection to socket. Trying to reconnect')
+			time.sleep(2)
 	time.sleep(1)
 
 	data = sock.recv(1024*8).decode()
@@ -38,9 +43,10 @@ def get_socket_answer(query1):
 	position_of_brace = data.find('{')
 	if position_of_brace == -1:
 		#get second part of message
-		log.info('daemon output in 2 messages?')
+		log.info('daemon output in 2 messages')
 		log.debug(data)
+		msg_size = int(data)
 		time.sleep(0.1)
-		data = sock.recv(1024*8).decode()
+		data = sock.recv(msg_size + 10).decode()
 		
 	return data[position_of_brace:]

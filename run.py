@@ -12,58 +12,26 @@ from multiprocessing import Process
 import logger_module
 
 cwd = os.path.dirname(os.path.abspath(__file__))
+
+# New log-file in every start. REMOVE IT IN PRODUCTION!!!!
 try:
-	os.remove(os.path.join(cwd, 'frontend.log'))		# New log-file in every start. REMOVE IT LATER!!!!
+	os.remove(os.path.join(cwd, 'frontend.log'))
 except FileNotFoundError:
 	pass
+
 logger_module.init_logger(cwd)
 log = logger_module.get_logger()
 
-log.debug('TEST debug message')
-log.info('TEST info message')
-log.warning('TEST warning message')
-log.error('TEST error message')
-log.critical('TEST critical message')
+#log.debug('TEST debug message')
+#log.info('TEST info message')
+#log.warning('TEST warning message')
+#log.error('TEST error message')
+#log.critical('TEST critical message')
 
 log.info('frontend script start')
 
 import html_parts
-import backend_calls
-
-def show_zones():
-	#print('enter zones renderer')
-	log.debug('enter zones renderer')
-	with open("index.html", "w") as page, open("html_templates/open.html", "r") as first, open("html_templates/close.html", "r") as last, open("html_templates/zones.html", "r") as zones:
-		buf = first.read()
-		page.write(buf)
-		buf = zones.read()
-		page.write(buf)
-		buf = last.read()
-		page.write(buf)
-	page.close()
-	first.close()
-	last.close()
-	zones.close()	
-	
-	time.sleep(1)
-	pyautogui.press('f5')
-
-def show_main():
-	#print('enter main renderer')
-	log.debug('enter main renderer')
-	with open("index.html", "w") as page, open("html_templates/open.html", "r") as first, open("html_templates/close.html", "r") as last, open("html_templates/main.html", "r") as main:
-		buf = first.read()
-		page.write(buf)
-		buf = main.read()
-		page.write(buf)
-		buf = last.read()
-		page.write(buf)
-	page.close()
-	first.close()
-	last.close()
-	
-	time.sleep(1)
-	pyautogui.press('f5')
+from backend_calls import get_socket_answer, connect_to_socket
 
 def print_xml_tree(element, lvl = 0):
 	ret = ""
@@ -84,13 +52,14 @@ def print_xml_tree(element, lvl = 0):
 	
 	return ret
 
-if backend_calls.connect_to_socket() is False:
-	#Error
-	pass
+while connect_to_socket() is False:
+	log.error('No connection to socket. Trying to reconnect')
+	time.sleep(2)
 
-config_data = backend_calls.get_socket_answer('"args":null,"cmd":"getconfig"')
+config_data = get_socket_answer('"args":null,"cmd":"getconfig"')
 config_json_data = json.loads(config_data)
 #print(config_json_data)
+
 
 #print('parse resp cfgxml')
 #xml_data = ET.fromstring(config_json_data['resp']['cfgxml'])
@@ -118,14 +87,14 @@ arg = "/board_0/port_0/loop_0/sensor_001/in/status"
 raw_text = "\"args\":[\"" + arg + "\"],\"cmd\":\"addreadparamstopool\""
 print(raw_text)
 
-data = backend_calls.get_socket_answer(raw_text)
+data = get_socket_answer(raw_text)
 print(data)
 
 raw_text = "\"args\":null,\"cmd\":\"getreadparamfrompool\""
 print("getting params:")
 print(raw_text)
 
-pools_data = backend_calls.get_socket_answer(raw_text)
+pools_data = get_socket_answer(raw_text)
 print(pools_data)
 
 print("parsed")
@@ -189,7 +158,6 @@ for port in boards_json['port']:
 
 journal_list = ""
 
-s = "not okei"
 #render webpages, start Flask
 app = Flask(__name__)
 
@@ -200,11 +168,15 @@ def home():
 
 @app.route('/zones')
 def zones():
-	return render_template("zones.html", content=s, 
+	return render_template("zones.html",
 		signaling_table=signaling_table,
 		notification_table=notification_table,
 		firefighting_table=firefighting_table,
 		smoke_removal_table=smoke_removal_table)
+		
+@app.route('/exact_zone')
+def exact_zone():
+	return render_template("exact_zone.html")
 
 tmp_page = '''<!DOCTYPE html>
 <html>
@@ -244,11 +216,11 @@ def run_app():
 process = Process(target=run_app)
 process.start()
 
-os.system("firefox --kiosk localhost:5000 &")
-#browser = webbrowser.get()
-#browser.open('localhost:5000')
+#os.system("firefox --kiosk localhost:5000 &")
+browser = webbrowser.get()
+browser.open('localhost:5000')
 
-#time.sleep(15)
+time.sleep(15)
 #pyautogui.press('f11')
 
 path_to_file = os.path.join(cwd, "dynamic_data/journal.txt")
@@ -264,7 +236,7 @@ while True:
 		f.write(html_parts.add_journal_row())
 		f.close()
 	
-	#data = backend_calls.get_socket_answer('\"args\":null,\"cmd\":\"getreadparamfrompool\"')
+	#data = get_socket_answer('\"args\":null,\"cmd\":\"getreadparamfrompool\"')
 	#print(data)
 	
 	#json_data = json.loads(data)
@@ -274,7 +246,7 @@ while True:
 			#print("REWRITE!")
 			#value_to_check = candidate
 	
-	#data = backend_calls.get_socket_answer('\"args\":null,\"cmd\":\"getjournal\"')
+	#data = get_socket_answer('\"args\":null,\"cmd\":\"getjournal\"')
 	#print(data)
 	#pyautogui.press('f5')
 

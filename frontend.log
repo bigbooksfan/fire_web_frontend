@@ -1,0 +1,82 @@
+INFO: frontend script start
+DEBUG: call daemon with query: "args":null,"cmd":"getconfig"
+INFO: fire : id: 1, 
+fire : id: 1, version: 0.1, 
+
+DEBUG: zones structure
+DEBUG: {'@id': '1', '@logic': 'any', '@name': 'Сигнализация Помещение 1', 'sensor': {'@board': '0', '@id': '001', '@loop': '0', '@port': '0'}}
+DEBUG: {'@id': '2', '@logic': 'any', '@name': 'Сигнализация Помещение 2', 'sensor': {'@board': '0', '@id': '002', '@loop': '0', '@port': '0'}}
+DEBUG: {'@id': '1', '@logic': 'any', '@name': 'Оповещение Помещение 1', 'signaling': {'@id': '1'}}
+DEBUG: {'@id': '2', '@logic': 'any', '@name': 'Оповещение Помещение 2', 'signaling': {'@id': '2'}}
+DEBUG: {'@id': '1', '@logic': 'any', '@name': 'Пожаротушение Помещение 1', 'signaling': {'@id': '1'}}
+DEBUG: {'@id': '2', '@logic': 'any', '@name': 'Пожаротушение Помещение 2', 'signaling': {'@id': '2'}}
+DEBUG: {'@id': '1', '@logic': 'any', '@name': 'Дымоудаление Помещение 1', 'signaling': {'@id': '1'}}
+DEBUG: {'@id': '2', '@logic': 'any', '@name': 'Дымоудаление Помещение 2', 'signaling': {'@id': '2'}}
+DEBUG: boards data:
+DEBUG: {
+    "@id": "0",
+    "@version": "1.0",
+    "port": [
+        {
+            "@id": "0",
+            "@type": "loop plc",
+            "@ver": "5",
+            "loop": {
+                "@id": "0",
+                "device": [
+                    {
+                        "@addr": "1",
+                        "@id": "001",
+                        "@name": "\u041f\u043e\u043c\u0435\u0449\u0435\u043d\u0438\u0435 1",
+                        "@type": "1",
+                        "@version": "1.0"
+                    },
+                    {
+                        "@addr": "2",
+                        "@id": "002",
+                        "@name": "\u041f\u043e\u043c\u0435\u0449\u0435\u043d\u0438\u0435 2",
+                        "@type": "2",
+                        "@version": "1.0",
+                        "setting": [
+                            {
+                                "@name": "t_w",
+                                "@value": "40.0"
+                            },
+                            {
+                                "@name": "t_f",
+                                "@value": "70.0"
+                            },
+                            {
+                                "@name": "s_w",
+                                "@value": "35"
+                            },
+                            {
+                                "@name": "s_f",
+                                "@value": "45"
+                            }
+                        ]
+                    },
+                    {
+                        "@addr": "3",
+                        "@id": "003",
+                        "@name": "\u041f\u043e\u043c\u0435\u0449\u0435\u043d\u0438\u0435 3",
+                        "@type": "3",
+                        "@version": "1.0"
+                    }
+                ]
+            }
+        },
+        {
+            "@id": "1",
+            "@type": "unused"
+        },
+        {
+            "@id": "2",
+            "@type": "unused"
+        },
+        {
+            "@id": "3",
+            "@type": "unused"
+        }
+    ]
+}
